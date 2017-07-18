@@ -2,11 +2,17 @@
 
 A function to shorten strings with options.
 
+## Install
+
+$ npm install truncateString --save
+
 ## How to use
 
 Minimal usage:
 
 ~~~
+var truncateString = require('truncateString');
+
 truncateString('Lorem Ipsum Dolor Est Sit Amet!', 8);
 // => Lorem Ip…
 ~~~
