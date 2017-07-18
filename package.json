@@ -1,7 +1,7 @@
 {
   "name": "truncatestring",
   "version": "0.0.1",
-  "description": "Function that truncates a string.",
+  "description": "A function to shorten strings with options.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"

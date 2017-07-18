@@ -1,6 +1,6 @@
 # truncateString
 
-This function will shorten a string depending on some options.
+A function to shorten strings with options.
 
 ## How to use
 
