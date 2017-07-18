@@ -1,0 +1,32 @@
+{
+  "name": "truncatestring",
+  "version": "0.0.1",
+  "description": "Function that truncates a string.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micjan/truncateString.git"
+  },
+  "keywords": [
+    "Truncate",
+    "Shorten",
+    "String",
+    "Options",
+    "Elipsis",
+    "Helper",
+    "Function",
+    "Method"
+  ],
+  "author": "Michael Janssen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/micjan/truncateString/issues"
+  },
+  "homepage": "https://github.com/micjan/truncateString#readme",
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  }
+}
