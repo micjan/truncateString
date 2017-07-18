@@ -21,18 +21,18 @@ describe('truncateString', function() {
     assert.equal(truncateString(null, 3), '');
   });
 
-  // The ellipsis is the string that is appended to the shortened(!) string.
-  // If the string wasn't shortened, the ellipsis will not be appended.
-  // The default ellipsis is '…'.
+  // The appendix is the string that is appended to the shortened(!) string.
+  // If the string wasn't shortened, the appendix will not be appended.
+  // The default appendix is '…'.
   it('should truncate String with valid elipsis-option', function() {
-    assert.equal(truncateString('Lorem Ipsum', 3, { ellipsis: '...' }), 'Lor...');
-    assert.equal(truncateString('Lorem Ipsum', 3, { ellipsis: '' }), 'Lor');
+    assert.equal(truncateString('Lorem Ipsum', 3, { appendix: '...' }), 'Lor...');
+    assert.equal(truncateString('Lorem Ipsum', 3, { appendix: '' }), 'Lor');
   });
 
-  it('should truncate String with invalid ellipsis-option', function() {
-    assert.equal(truncateString('Lorem Ipsum', 3, { ellipsis: null }), 'Lor…');
-    assert.equal(truncateString('Lorem Ipsum', 3, { ellipsis: undefined }), 'Lor…');
-    assert.equal(truncateString('Lorem Ipsum', 3, { ellipsis: 42 }), 'Lor…');
+  it('should truncate String with invalid appendix-option', function() {
+    assert.equal(truncateString('Lorem Ipsum', 3, { appendix: null }), 'Lor…');
+    assert.equal(truncateString('Lorem Ipsum', 3, { appendix: undefined }), 'Lor…');
+    assert.equal(truncateString('Lorem Ipsum', 3, { appendix: 42 }), 'Lor…');
   });
 
   // The 'threshold'-option is the length the string has to surpass so it is shortened to the 'length'.

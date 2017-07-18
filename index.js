@@ -7,18 +7,18 @@ module.exports = function(string, length, options) {
   // Base settings
   var settings = {
     threshold: length,
-    ellipsis: '…',
+    appendix: '…',
   };
 
   // Overwrite settings with options if they are valid
   if (options.threshold && typeof options.threshold === 'number' && options.threshold > 0) settings.threshold = options.threshold;
-  if (typeof options.ellipsis === 'string') settings.ellipsis = options.ellipsis;
+  if (typeof options.appendix === 'string') settings.appendix = options.appendix;
 
   // Check if string is long enough for truncation
   if (string.length > (settings.threshold || length) && string.length > length) {
     var shortenedString = string.substring(0, length);
 
-    return shortenedString + settings.ellipsis;
+    return shortenedString + settings.appendix;
   }
 
   // Otherwise return string as is
