@@ -17,7 +17,6 @@ module.exports = function(string, length, options) {
   // Check if string is long enough for truncation
   if (string.length > (settings.threshold || length) && string.length > length) {
     var shortenedString = string.substring(0, length);
-
     return shortenedString + settings.appendix;
   }
 
