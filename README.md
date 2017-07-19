@@ -5,7 +5,7 @@ A function to shorten strings with options.
 ## Install
 
 ~~~
-$ npm install truncateString --save
+$ npm install truncatestring --save
 ~~~
 
 ## How to use
