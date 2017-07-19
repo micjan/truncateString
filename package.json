@@ -1,6 +1,6 @@
 {
   "name": "truncatestring",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A function to shorten strings with options.",
   "main": "dist/truncateString.min.js",
   "scripts": {
