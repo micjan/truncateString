@@ -27,7 +27,7 @@
     "method"
   ],
   "author": "Michael Janssen",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/micjan/truncateString/issues"
   },

@@ -94,4 +94,4 @@ Can be any string to append to a shortened string. By default it is and ellipsis
 
 ## License
 
-MIT
+MIT © Michael Janssen
