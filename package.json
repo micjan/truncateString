@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "compile": "npm run es6toes5 && npm run uglifyes5",
-    "es6toes5": "babel --presets es2015 truncateString.js --out-file dist/truncateString.js",
+    "es6toes5": "babel --presets es2015 src/truncateString.js --out-file dist/truncateString.js",
     "uglifyes5": "uglifyjs dist/truncateString.js --output dist/truncateString.min.js",
     "build": "npm run compile && npm test",
     "prepublish": "npm run build"
