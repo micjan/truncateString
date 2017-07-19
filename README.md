@@ -13,7 +13,7 @@ $ npm install truncateString --save
 Minimal usage:
 
 ~~~
-var truncateString = require('truncateString');
+var truncateString = require('truncatestring');
 
 truncateString('Lorem Ipsum Dolor Est Sit Amet!', 8);
 // => Lorem Ip…
@@ -24,7 +24,7 @@ Usage with default options:
 ~~~
 truncateString('Lorem Ipsum Dolor Est Sit Amet!', 8, {
   appendix: '…',
-  treshold: 8 // Default equals second parameter
+  threshold: 8 // Default equals second parameter
 });
 // => Lorem Ip…
 ~~~
@@ -45,8 +45,8 @@ The string to shorten.
 
 Type: `number`
 
-The length to shorten the `string` to.  
-If `string.length` is smaller or equal to `length` the string will be returned without any modification.  
+The length to shorten the `string` to.
+If `string.length` is smaller or equal to `length` the string will be returned without any modification.
 If `string.length` is larger than `length` the string will be cropped to have the length of `length` and an ellipsis (`…`) will be appended to it before returning (Can be changed by setting `options.appendix`).
 
 ### options
