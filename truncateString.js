@@ -1,11 +1,10 @@
-module.exports = function(string, length, options) {
+module.exports = function(string, length, options = {}) {
   // Initially handle the params
   if (typeof string !== 'string') return '';
   if (typeof length !== 'number' || length < 0) return string;
-  if (typeof options !== 'object') options = {};
 
   // Base settings
-  var settings = {
+  const settings = {
     threshold: length,
     appendix: '…',
   };
@@ -16,8 +15,8 @@ module.exports = function(string, length, options) {
 
   // Check if string is long enough for truncation
   if (string.length > (settings.threshold || length) && string.length > length) {
-    var shortenedString = string.substring(0, length);
-    return shortenedString + settings.appendix;
+    const shortenedString = string.substring(0, length);
+    return `${shortenedString}${settings.appendix}`;
   }
 
   // Otherwise return string as is
