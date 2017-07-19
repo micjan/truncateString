@@ -1,5 +1,5 @@
 var assert = require('assert');
-var truncateString = require('../index.js');
+var truncateString = require('../dist/truncateString.min.js');
 
 describe('truncateString', function() {
   it('should truncate String without options', function() {

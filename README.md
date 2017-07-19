@@ -5,7 +5,7 @@ A function to shorten strings with options.
 ## Install
 
 ~~~
-$ npm install truncateString --save
+$ npm install truncatestring --save
 ~~~
 
 ## How to use
@@ -92,6 +92,16 @@ Type: `string`
 
 Can be any string to append to a shortened string. By default it is and ellipsis (`…`).
 
+## Dev notes
+
+Work in `src/truncateString.js` and then run
+
+~~~
+$npm run build
+~~~
+
+This will transpile (to `dist/truncateString.js`), uglify (to `dist/truncateString.min.js`) and run tests (on the `dist/truncateString.min.js`).
+
 ## License
 
-MIT
+MIT © Michael Janssen
