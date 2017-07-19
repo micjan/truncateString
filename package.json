@@ -16,14 +16,15 @@
     "url": "git+https://github.com/micjan/truncateString.git"
   },
   "keywords": [
-    "Truncate",
-    "Shorten",
-    "String",
-    "Options",
-    "Elipsis",
-    "Helper",
-    "Function",
-    "Method"
+    "truncate",
+    "shorten",
+    "cutting",
+    "string",
+    "options",
+    "ellipsis",
+    "helper",
+    "function",
+    "method"
   ],
   "author": "Michael Janssen",
   "license": "ISC",
