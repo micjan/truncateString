@@ -8,6 +8,8 @@ before_script:
   - npm install
   - npm run build
 
+sudo: true
+
 dist: trusty
 
 branches:
