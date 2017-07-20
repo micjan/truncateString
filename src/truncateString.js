@@ -1,4 +1,4 @@
-module.exports = function(string, length, options = {}) {
+module.exports = function truncateString(string, length, options = {}) {
   // Initially handle the params
   if (typeof string !== 'string') return '';
   if (typeof length !== 'number' || length < 0) return string;
