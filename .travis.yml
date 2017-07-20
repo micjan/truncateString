@@ -12,4 +12,4 @@ dist: trusty
 
 branches:
   only:
-    - add-travic-ci
+    - add-travis-ci
