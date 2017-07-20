@@ -6,3 +6,5 @@ node_js:
 before_script:
   - npm install
   - npm run build
+
+dist: trusty
