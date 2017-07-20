@@ -4,7 +4,7 @@
   "description": "A function to shorten strings with options.",
   "main": "dist/truncateString.min.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc --reporter=html mocha",
     "lint": "eslint src/truncateString.js",
     "compile": "npm run transpile && npm run uglify",
     "transpile": "babel --presets es2015 src/truncateString.js --out-file dist/truncateString.js",
@@ -40,6 +40,7 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
     "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
     "uglify-js": "^3.0.25"
   }
 }
