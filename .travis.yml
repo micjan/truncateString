@@ -1,9 +1,10 @@
 language: node_js
 
 node_js:
-  - "4"
+  - "node"
 
 before_script:
+  - mkdir dist
   - npm install
   - npm run build
 
