@@ -9,3 +9,7 @@ before_script:
   - npm run build
 
 dist: trusty
+
+branches:
+  only:
+    - add-travic-ci
