@@ -102,6 +102,10 @@ $npm run build
 
 This will transpile (to `dist/truncateString.js`), uglify (to `dist/truncateString.min.js`) and run tests (on the `dist/truncateString.min.js`).
 
+Make sure that all Tests are successful and check the coverage/index.html for 100% test-coverage.
+
+Also, no dependencies, please! devDependencies are OK of course.
+
 ## License
 
 MIT © Michael Janssen
