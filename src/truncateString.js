@@ -5,14 +5,14 @@ module.exports = function truncateString(string, length, options = {}) {
 
   // Base settings
   const settings = {
-    threshold: length,
     appendix: '…',
+    threshold: length,
     trim: true,
   };
 
   // Overwrite settings with options if they are valid
-  if (options.threshold && typeof options.threshold === 'number' && options.threshold > 0) settings.threshold = options.threshold;
   if (typeof options.appendix === 'string') settings.appendix = options.appendix;
+  if (options.threshold && typeof options.threshold === 'number' && options.threshold > 0) settings.threshold = options.threshold;
   if (typeof options.trim !== 'undefined') settings.trim = options.trim;
 
   // Check if string is long enough for truncation
