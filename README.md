@@ -16,7 +16,7 @@ Minimal usage:
 var truncateString = require('truncatestring');
 
 truncateString('Lorem Ipsum Dolor Est Sit Amet!', 8);
-// => Lorem Ip…
+// => "Lorem Ip…"
 ~~~
 
 Usage with default options:
@@ -26,7 +26,7 @@ truncateString('Lorem Ipsum Dolor Est Sit Amet!', 8, {
   appendix: '…',
   threshold: 8 // Default equals second parameter
 });
-// => Lorem Ip…
+// => "Lorem Ip…"
 ~~~
 
 ## API
@@ -67,21 +67,21 @@ Consider this:
 
 ~~~
 truncateString('I am a tiny sentence.', 20);
-// => I am a tiny sentence…
+// => "I am a tiny sentence…"
 ~~~
 
 The string is just one char to long (21) and just the period is cut off, replaced by an ellipsis. We may want to prevent those cases. So we can do this:
 
 ~~~
 truncateString('I am a tiny sentence.', 20, { threshold: 30 });
-// => I am a tiny sentence.
+// => "I am a tiny sentence."
 ~~~
 
 The strings length is lower than 30, so it will be returned unchanged.
 
 ~~~
 truncateString('I am a tiny sentence.', 10, { threshold: 20 });
-// => I am a tin…
+// => "I am a tin…"
 ~~~
 
 The strings length is 21, so the threshold is surpassed and the string is shortened to the length of 10, cutting of a reasonable amount.
@@ -92,6 +92,36 @@ Type: `string`
 
 Can be any string to append to a shortened string. By default it is and ellipsis (`…`).
 
+#### options.trim
+
+Type: `boolean`
+
+This is `true` by default and will trim all spaces after the cut was made at the cut off end of the string. The untouched ends of the string will stay as they were.
+
+Normal use-case:
+
+~~~
+truncateString('Lorem Ipsum', 6);
+// => "Lorem…"
+~~~ 
+
+~~~
+truncateString('Lorem Ipsum', 6, { trim: false });
+// => "Lorem …"
+~~~ 
+
+And with a couple extra spaces, 'cause why not?
+
+~~~
+truncateString('  Lorem   Ipsum  ', 10);
+// => "  Lorem…"
+~~~ 
+
+~~~
+truncateString('  Lorem   Ipsum  ', 10, { trim: false });
+// => "  Lorem   …"
+~~~ 
+
 ## Dev notes
 
 Work in `src/truncateString.js` and then run
@@ -101,6 +131,10 @@ $npm run build
 ~~~
 
 This will transpile (to `dist/truncateString.js`), uglify (to `dist/truncateString.min.js`) and run tests (on the `dist/truncateString.min.js`).
+
+Make sure that all Tests are successful and check the coverage/index.html for 100% test-coverage.
+
+Also, no dependencies, please! devDependencies are OK of course.
 
 ## License
 

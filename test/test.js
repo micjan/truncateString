@@ -5,7 +5,7 @@ describe('truncateString', function() {
   it('should truncate String without options', function() {
     assert.equal(truncateString('Lorem Ipsum', 3), 'Lor…');
     assert.equal(truncateString('Lorem Ipsum', 5), 'Lorem…');
-    assert.equal(truncateString('Lorem Ipsum', 6), 'Lorem …'); // Space is not cut off
+    assert.equal(truncateString('Lorem Ipsum', 6), 'Lorem…'); // Space is not cut off by default
     assert.equal(truncateString('Lorem Ipsum', 8), 'Lorem Ip…');
     assert.equal(truncateString('Lorem Ipsum', 11), 'Lorem Ipsum'); // Exact string-length
     assert.equal(truncateString('Lorem Ipsum', 12), 'Lorem Ipsum'); // Greater length than string-length
@@ -52,5 +52,19 @@ describe('truncateString', function() {
     assert.equal(truncateString('Lorem Ipsum', 3, { threshold: 0 }), 'Lor…');
     assert.equal(truncateString('Lorem Ipsum', 3, { threshold: null }), 'Lor…');
     assert.equal(truncateString('Lorem Ipsum', 3, { threshold: undefined }), 'Lor…');
+  });
+
+  // The 'trim'-option determines if any spaces are cut off on the truncated side of the string.
+  // By default this is true.
+  // There are no tests on invalid values because options.trim is handled as truthy/falsey internally.
+  it('should truncate String with valid trim-option', function() {
+    assert.equal(truncateString('Lorem Ipsum', 6, { trim: false }), 'Lorem …');
+    assert.equal(truncateString('Lorem Ipsum Dolor', 12, { trim: false }), 'Lorem Ipsum …');
+    assert.equal(truncateString('Lorem     Ipsum', 8, { trim: false }), 'Lorem   …');
+    assert.equal(truncateString('Lorem Ipsum', 6, { trim: true }), 'Lorem…');
+    assert.equal(truncateString('Lorem Ipsum Dolor', 12, { trim: true }), 'Lorem Ipsum…');
+    assert.equal(truncateString('Lorem     Ipsum', 8, { trim: true }), 'Lorem…');
+    assert.equal(truncateString('  Lorem Ipsum  ', 8, { trim: false }), '  Lorem …');
+    assert.equal(truncateString('  Lorem  ', 20, { trim: false }), '  Lorem  ');
   });
 });
