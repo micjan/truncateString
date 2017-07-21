@@ -25,7 +25,12 @@
     "ellipsis",
     "helper",
     "function",
-    "method"
+    "method",
+    "vanilla js",
+    "no dependencies",
+    "independent",
+    "es6",
+    "es2015"
   ],
   "author": "Michael Janssen",
   "license": "MIT",
