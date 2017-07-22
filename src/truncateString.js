@@ -47,62 +47,66 @@ module.exports = function truncateString(string, length, options = {}) {
 
   // Check if string is long enough for truncation
   if (string.length > settings.threshold && string.length > length) {
-    // Shorten the String
-    let shortenedString = string.substring(0, length);
+    // Cache the intended cut-position because it may change later
+    let cutAt = length;
 
-    // Do this only if cutChars are defined, otherwise the shortenedString is
-    // left with its cut where it was made.
+    // Do this only if cutChars are defined.
     if (settings.cutChars.length > 0) {
-      // Split the string in left and right parts and cache some distance-variables
-      // to initially store the length of each string-part. Doing this we now know
-      // the distance to the left- and rightmost potential cut-position
-      // of the string relative to the intended cut-position.
-      const leftString = shortenedString;
-      let leftDist = leftString.length;
-      const rightString = string.substring(length);
-      let rightDist = rightString.length;
+      // Split the string in left and right parts by cutting it at the intended
+      // cup-position and cache the initial cut-position-offsets relative
+      // to that intended cut-position.
+      // By doing that, we now know how much to the left or right we have to move
+      // to make a permitted cut.
+      const leftString = string.substring(0, cutAt);
+      let leftCutOffset = leftString.length;
+      const rightString = string.substring(cutAt);
+      let rightCutOffset = rightString.length;
 
-      // Looping through all cutChars, updating the leftDist and rightDist vars
+      // Looping through all cutChars, updating the leftCutOffset and rightCutOffset vars
       // if a char was found in leftString or rightString that is closer to the
-      // intended cut-position than the previous cut-position on each side.
+      // intended cut-position than the previous cut-position-offsets on each side.
       settings.cutChars.forEach((char) => {
         // First find the current char in each string-part that is closest to the
         // intended cut-position.
-        const leftIndex = leftString.lastIndexOf(char);
-        const rightIndex = rightString.indexOf(char);
-        // If the char was found in the leftString and the distance to the
-        // intended cut-position is closer than the old one, update the leftDist.
-        if (leftIndex >= 0 && leftString.length - leftIndex < leftDist) {
-          leftDist = leftString.length - leftIndex;
+        const leftIndex = leftString.lastIndexOf(char); // Rightmost Char
+        const rightIndex = rightString.indexOf(char); // Leftmost Char
+        // If the char was found in the leftString && the offset to the
+        // intended cut-position is closer than the old one, update the leftCutOffset.
+        if (leftIndex >= 0 && leftString.length - leftIndex < leftCutOffset) {
+          leftCutOffset = leftString.length - leftIndex;
         }
         // Same for the rightString.
-        if (rightIndex >= 0 && rightIndex < rightDist) {
-          rightDist = rightIndex;
+        if (rightIndex >= 0 && rightIndex < rightCutOffset) {
+          rightCutOffset = rightIndex;
         }
       });
-      // When all chars were checked in leftString and rightString, and we where
+      // When all chars were checked in leftString and rightString, and we know where
       // the closest cut-position to the intended one is, we can decide if we
       // need to move the cut to the left or the right.
-      if (rightDist < leftDist) {
-        // increment the rightDist, to include the char that marks the cut-position.
+      if (rightCutOffset < leftCutOffset) {
+        // increment the rightCutOffset, to include the char that marks the cut-position.
         // Otherwise it would be cut off. Even a space is left dangling if the char
-        // was a space. But that will be cut trimmed later if needed.
-        rightDist += 1;
-        // Updated the shortended string by shortening the rightString before
-        // appending it to the leftString.
-        shortenedString = leftString + rightString.substring(0, rightDist);
+        // was a space. But that will be trimmed later if needed.
+        rightCutOffset += 1;
+        // Updated the cutAt-var by adding the rightCutOffset the the leftString.length.
+        cutAt = leftString.length + rightCutOffset;
       } else {
-        // Similar to the rightDist, the leftDist has to be reduced by one to not
-        // cut off the char that is marking the cut, except when the leftDist equals
-        // the leftString length. Because in that case, we want to return an empty string.
-        leftDist = leftDist === leftString.length ? leftString.length : leftDist - 1;
-        // Forgetting about the rightString we just cut off a bit from the leftString
-        shortenedString = leftString.substring(0, leftString.length - leftDist);
+        // Similar to the rightCutOffset, the leftCutOffset has to be reduced by one to not
+        // cut off the char that is marking the cut, except when the leftCutOffset equals
+        // the leftString length. Because in that case, the cut should be made on the start
+        // of the string resulting in an empty string to return.
+        leftCutOffset = leftCutOffset === leftString.length ? leftString.length : leftCutOffset - 1;
+        // Updating the cutAt-var
+        cutAt = leftString.length - leftCutOffset;
       }
-      // Lastly check if the string was cut at all. If that wasn't the case, we can just return it.
-      if (shortenedString === string) {
-        return string;
-      }
+    }
+
+    // Shorten the String
+    let shortenedString = string.substring(0, cutAt);
+
+    // Check if the string was cut at all. If that wasn't the case, we can just return it.
+    if (shortenedString === string) {
+      return string;
     }
 
     // Trim the cut end if the settings say so
