@@ -25,7 +25,7 @@ module.exports = function truncateString(string, length, options = {}) {
   }
 
   // Validate options.cutChars
-  if (typeof options.cutChars === 'string') {
+  if (typeof options.cutChars === 'string' && options.cutChars.length === 1) {
     settings.cutChars.push(options.cutChars);
   } else if (Object.prototype.toString.call(options.cutChars) === '[object Array]') {
     options.cutChars.forEach((char) => {
