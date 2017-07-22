@@ -93,4 +93,13 @@ describe('truncateString', function () {
     assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 19, { cutChars: [' ', '-'] }), 'Lorem Ipsum-Dolor…');
     assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 20, { cutChars: [' ', '-'] }), 'Lorem Ipsum-Dolor Sit'); // 20 is closer to the string-end than the last space before "sit". So the string is not cut at all and returned without ellipsis.
   });
+
+  it('should truncate String with invalid cutChars-option', function () {
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 7, { cutChars: ['sum'] }), 'Lorem I…'); // Since cutChars contains no valid chars the option will be ignored completely
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 7, { cutChars: 'sum' }), 'Lorem I…'); // Here too
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 12, { cutChars: [' ', 'sum'] }), 'Lorem Ipsum-Dolor…');
+    assert.equal(truncateString('Lorem Ipsum2Dolor Sit', 13, { cutChars: 2 }), 'Lorem Ipsum2D…');
+    assert.equal(truncateString('Lorem Ipsum2Dolor Sit', 13, { cutChars: [' ', 2] }), 'Lorem Ipsum2Dolor…');
+
+  });
 });
