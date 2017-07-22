@@ -69,9 +69,10 @@ describe('truncateString', function () {
     assert.equal(truncateString('  Lorem  ', 20, { trim: false }), '  Lorem  ');
   });
 
-  // The cutChars-array contains characters that mark the places of the string where it can be cut.
-  // Starting at the base-'length'-cut-position the shortest distance to any of the chars is measured.
-  // When the nearest char (to the left OR right) is found the cut will be made there.
+  // The cutChars-array contains characters that mark the places of the string
+  // where it can be cut. Starting at the intended cut-position the shortest distance
+  // to any of the chars is measured. When the nearest char (to the left OR right)
+  // is found the cut will be made there.
   it('should truncate String with valid cutChars-option', function () {
     assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 8, { cutChars: ' ' }), 'Lorem…');
     assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 8, { cutChars: [' '] }), 'Lorem…');
