@@ -11,37 +11,29 @@ module.exports = function truncateString(string, length, options = {}) {
     trim: true,
   };
 
-  // Some Helpers
-  const isArray = mixed => Object.prototype.toString.call(mixed) === '[object Array]';
-  const isString = mixed => typeof mixed === 'string';
-  const isNumber = mixed => typeof mixed === 'number';
-  const isDefined = mixed => typeof mixed !== 'undefined';
-  const trimRight = str => str.replace(/ +$/, '');
-  const appendix = str => `${str}${settings.appendix}`;
-
   // Validate options.appendix
-  if (isString(options.appendix)) {
+  if (typeof options.appendix === 'string') {
     settings.appendix = options.appendix;
   }
 
   // Validate options.cutChars
-  if (isString(options.cutChars)) {
+  if (typeof options.cutChars === 'string') {
     settings.cutChars.push(options.cutChars);
-  } else if (isArray(options.cutChars)) {
+  } else if (Object.prototype.toString.call(options.cutChars) === '[object Array]') {
     options.cutChars.forEach((char) => {
-      if (isString(char) && char.length === 1) {
+      if (typeof char === 'string' && char.length === 1) {
         settings.cutChars.push(char);
       }
     });
   }
 
   // Validate options.threshold
-  if (options.threshold && isNumber(options.threshold) && options.threshold > 0) {
+  if (options.threshold && typeof options.threshold === 'number' && options.threshold > 0) {
     settings.threshold = options.threshold;
   }
 
   // Validate options.trim
-  if (isDefined(options.trim)) {
+  if (typeof options.trim !== 'undefined') {
     settings.trim = options.trim;
   }
 
@@ -109,11 +101,11 @@ module.exports = function truncateString(string, length, options = {}) {
       return string;
     }
 
-    // Trim the cut end if the settings say so
-    if (settings.trim) shortenedString = trimRight(shortenedString);
+    // Remove all spaces on the cut end if the settings say so
+    if (settings.trim) shortenedString = shortenedString.replace(/ +$/, '');
 
     // Add appendix and return the new string
-    return appendix(shortenedString);
+    return `${shortenedString}${settings.appendix}`;
   }
 
   // Return unmanipulated string
