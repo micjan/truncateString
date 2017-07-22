@@ -67,4 +67,28 @@ describe('truncateString', function() {
     assert.equal(truncateString('  Lorem Ipsum  ', 8, { trim: false }), '  Lorem …');
     assert.equal(truncateString('  Lorem  ', 20, { trim: false }), '  Lorem  ');
   });
+
+  // The cutChars-array contains characters that mark the places of the string where it can be cut.
+  // Starting at the base-'length'-cut-position the shortest distance to any of the chars is measured.
+  // When the nearest char (to the left OR right) is found the cut will be made there.
+  it('should truncate String with valid cutChars-option', function () {
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 8, { cutChars: ' ' }), 'Lorem…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 8, { cutChars: [' '] }), 'Lorem…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 13, { cutChars: [' '] }), 'Lorem Ipsum-Dolor…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 2, { cutChars: ['-'] }), '…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 8, { cutChars: ['-'] }), 'Lorem Ipsum-…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 2, { cutChars: [' ', '-'] }), '…'); // Since 2 is closer to the start of the string (pos = 0) than the first space (pos = 5) the cut is made at position 0 and only the ellipsis is returned.
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 3, { cutChars: [' ', '-'] }), 'Lorem…'); // Here on the other hand the cut at 3 is closer to the first space, so the result is "Lorem…"
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 5, { cutChars: [' ', '-'] }), 'Lorem…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 6, { cutChars: [' ', '-'] }), 'Lorem…'); // The dangling space is removed by the trim option (default = true)
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 6, { cutChars: [' ', '-'], trim: false }), 'Lorem …'); // Now the dangling space should be there
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 7, { cutChars: [' ', '-'] }), 'Lorem…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 9, { cutChars: [' ', '-'] }), 'Lorem Ipsum-…'); // The cut is made AFTER every cutChar so it will be part of the returned string. Only spaces are trimmed if the trim-options says so.
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 11, { cutChars: [' ', '-'] }), 'Lorem Ipsum-…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 12, { cutChars: [' ', '-'] }), 'Lorem Ipsum-…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 14, { cutChars: [' ', '-'] }), 'Lorem Ipsum-…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 16, { cutChars: [' ', '-'] }), 'Lorem Ipsum-Dolor…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 19, { cutChars: [' ', '-'] }), 'Lorem Ipsum-Dolor…');
+    assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 20, { cutChars: [' ', '-'] }), 'Lorem Ipsum-Dolor Sit'); // 20 is closer to the string-end than the last space before "sit". So the string is not cut at all and returned without ellipsis.
+  });
 });
