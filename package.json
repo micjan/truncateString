@@ -8,7 +8,7 @@
     "lint": "eslint src/truncateString.js",
     "compile": "npm run transpile && npm run uglify",
     "transpile": "babel --presets es2015 src/truncateString.js --out-file dist/truncateString.js",
-    "uglify": "uglifyjs dist/truncateString.js --output dist/truncateString.min.js",
+    "uglify": "uglifyjs dist/truncateString.js --output dist/truncateString.min.js -m",
     "build": "npm run lint && npm run compile && npm test",
     "prepublish": "npm run build"
   },
