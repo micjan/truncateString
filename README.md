@@ -92,6 +92,44 @@ Type: `string`
 
 Can be any string to append to a shortened string. By default it is and ellipsis (`…`).
 
+#### options.cutChars
+
+Type: `string` or `array` of single chars
+
+By default, the string is cut at the positon `length` without checking if the cut will slice right through a word.
+You can prevent word-slicing by defining chars as markers where cuts are allowed. In most cases this would just be a space:
+
+~~~
+truncateString('Lorem ipsum-dolor sit.', 8, { cutChars: ' ' });
+// => "Lorem…"
+
+truncateString('Lorem ipsum-dolor sit.', 15, { cutChars: ' ' });
+// => "Lorem ipsum-dolor…"
+~~~
+
+So, what happend here?
+The intended cut in the first case would be `Lorem ip/sum-dolor sit.`. That cut is closer to the space between "Lorem" and "ipsum" than it is to the space between "dolor" and "sit", so the cut is moved to the left space.
+In the second example the intended cut `Lorem ipsum-dol/or sit.` is closer to the space on its right, so the cut is made there.
+
+You can also pass an array of chars like so:
+
+~~~
+truncateString('Lorem ipsum-dolor sit.', 10, { cutChars: [' ', '-'] });
+// => "Lorem ipsum-…"
+~~~
+
+The same rules apply here.
+
+The intended cut `Lorem ipsu/m-dolor sit.` is moved to the closest char. In this case it is the dash to its right.  
+Note, that the char that was marking the cut-position is **not** removed. The cut-position-char will stay attached to the returned string.
+
+The space in the first two examples **was** removed because `option.trim` is `true` by default.
+
+~~~
+truncateString('Lorem ipsum-dolor sit.', 8, { cutChars: ' ', trim: false });
+// => "Lorem …"
+~~~
+
 #### options.trim
 
 Type: `boolean`
@@ -103,24 +141,24 @@ Normal use-case:
 ~~~
 truncateString('Lorem Ipsum', 6);
 // => "Lorem…"
-~~~ 
+~~~
 
 ~~~
 truncateString('Lorem Ipsum', 6, { trim: false });
 // => "Lorem …"
-~~~ 
+~~~
 
 And with a couple extra spaces, 'cause why not?
 
 ~~~
 truncateString('  Lorem   Ipsum  ', 10);
 // => "  Lorem…"
-~~~ 
+~~~
 
 ~~~
 truncateString('  Lorem   Ipsum  ', 10, { trim: false });
 // => "  Lorem   …"
-~~~ 
+~~~
 
 ## Dev notes
 
