@@ -1,14 +1,14 @@
 {
   "name": "truncatestring",
-  "version": "1.0.2",
+  "version": "2.2.0",
   "description": "A function to shorten strings with options.",
   "main": "dist/truncateString.min.js",
   "scripts": {
     "test": "nyc --reporter=html mocha",
     "lint": "eslint src/truncateString.js",
-    "compile": "npm run transpile && npm run uglify",
+    "compile": "npm run transpile && npm run minify",
     "transpile": "babel --presets es2015 src/truncateString.js --out-file dist/truncateString.js",
-    "uglify": "uglifyjs dist/truncateString.js --output dist/truncateString.min.js",
+    "minify": "google-closure-compiler-js dist/truncateString.js > dist/truncateString.min.js",
     "build": "npm run lint && npm run compile && npm test",
     "prepublish": "npm run build"
   },
@@ -25,7 +25,12 @@
     "ellipsis",
     "helper",
     "function",
-    "method"
+    "method",
+    "vanilla js",
+    "no dependencies",
+    "independent",
+    "es6",
+    "es2015"
   ],
   "author": "Michael Janssen",
   "license": "MIT",
@@ -39,8 +44,8 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
+    "google-closure-compiler-js": "^20170626.0.0",
     "mocha": "^3.4.2",
-    "nyc": "^11.0.3",
-    "uglify-js": "^3.0.25"
+    "nyc": "^11.0.3"
   }
 }
