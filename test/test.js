@@ -24,12 +24,12 @@ describe('truncateString', function () {
   // The appendix is the string that is appended to the shortened(!) string.
   // If the string wasn't shortened, the appendix will not be appended.
   // The default appendix is '…'.
-  it('should truncate String with valid elipsis-option', function () {
+  it('should handle valid elipsis-option', function () {
     assert.equal(truncateString('Lorem ipsum', 3, { appendix: '...' }), 'Lor...');
     assert.equal(truncateString('Lorem ipsum', 3, { appendix: '' }), 'Lor');
   });
 
-  it('should truncate String with invalid appendix-option', function () {
+  it('should handle invalid appendix-option', function () {
     assert.equal(truncateString('Lorem ipsum', 3, { appendix: null }), 'Lor…');
     assert.equal(truncateString('Lorem ipsum', 3, { appendix: undefined }), 'Lor…');
     assert.equal(truncateString('Lorem ipsum', 3, { appendix: 42 }), 'Lor…');
@@ -37,7 +37,7 @@ describe('truncateString', function () {
 
   // The 'threshold'-option is the length the string has to surpass
   // so it is shortened to the 'length'. The default threshold is the length.
-  it('should truncate String with valid threshold-option', function () {
+  it('should handle valid threshold-option', function () {
     assert.equal(truncateString('Lorem ipsum', 3, { threshold: 3 }), 'Lor…'); // threshold === length => should not make a difference
     assert.equal(truncateString('Lorem ipsum', 8, { threshold: 10 }), 'Lorem ip…'); // threshold < string.length => string is shortened
     assert.equal(truncateString('Lorem ipsum', 8, { threshold: 11 }), 'Lorem ipsum'); // threshold === string.length => string is not shortened
@@ -46,7 +46,7 @@ describe('truncateString', function () {
     assert.equal(truncateString('Lorem ipsum', 12, { threshold: 5 }), 'Lorem ipsum'); // threshold < length && length > string.length => string is not shortened
   });
 
-  it('should truncate String with invalid threshold-option', function () {
+  it('should handle invalid threshold-option', function () {
     assert.equal(truncateString('Lorem ipsum', 3, { threshold: -3 }), 'Lor…');
     assert.equal(truncateString('Lorem ipsum', 3, { threshold: '12' }), 'Lor…');
     assert.equal(truncateString('Lorem ipsum', 3, { threshold: 0 }), 'Lor…');
@@ -58,7 +58,7 @@ describe('truncateString', function () {
   // side of the string. By default this is true.
   // There are no tests on invalid values because options.trim
   // is handled as truthy/falsey internally.
-  it('should truncate String with valid trim-option', function () {
+  it('should handle valid trim-option', function () {
     assert.equal(truncateString('Lorem ipsum', 6, { trim: false }), 'Lorem …');
     assert.equal(truncateString('Lorem ipsum dolor', 12, { trim: false }), 'Lorem ipsum …');
     assert.equal(truncateString('Lorem     ipsum', 8, { trim: false }), 'Lorem   …');
@@ -73,7 +73,7 @@ describe('truncateString', function () {
   // where it can be cut. Starting at the intended cut-position the shortest distance
   // to any of the chars is measured. When the nearest char (to the left OR right)
   // is found the cut will be made there.
-  it('should truncate String with valid cutChars-option', function () {
+  it('should handle valid cutChars-option', function () {
     assert.equal(truncateString('Lorem ipsum-dolor sit', 8, { cutChars: ' ' }), 'Lorem…');
     assert.equal(truncateString('Lorem ipsum-dolor sit', 8, { cutChars: [' '] }), 'Lorem…');
     assert.equal(truncateString('Lorem ipsum-dolor sit', 13, { cutChars: [' '] }), 'Lorem ipsum-dolor…');
@@ -94,7 +94,7 @@ describe('truncateString', function () {
     assert.equal(truncateString('Lorem ipsum-dolor sit', 20, { cutChars: [' ', '-'] }), 'Lorem ipsum-dolor sit'); // 20 is closer to the string-end than the last space before "sit". So the string is not cut at all and returned without ellipsis.
   });
 
-  it('should truncate String with invalid cutChars-option', function () {
+  it('should handle invalid cutChars-option', function () {
     assert.equal(truncateString('Lorem ipsum-dolor sit', 7, { cutChars: ['sum'] }), 'Lorem i…'); // Since cutChars contains no valid chars the option will be ignored completely
     assert.equal(truncateString('Lorem ipsum-dolor sit', 7, { cutChars: 'sum' }), 'Lorem i…'); // Here too
     assert.equal(truncateString('Lorem ipsum-dolor sit', 12, { cutChars: [' ', 'sum'] }), 'Lorem ipsum-dolor…');
@@ -103,7 +103,7 @@ describe('truncateString', function () {
   });
 
   // By setting verbose to true, the result will be an object with more information about the result.
-  it('should truncate String with valid verbose-option', function () {
+  it('should handle valid verbose-option', function () {
     assert.deepEqual(truncateString('Lorem ipsum-dolor sit', 6, { verbose: true }), {
       result: 'Lorem…',
       parts: ['Lorem ', 'ipsum-dolor sit'],
@@ -121,7 +121,7 @@ describe('truncateString', function () {
     });
   });
 
-  it('should truncate String with invalid values and valid verbose-option', function () {
+  it('should handle invalid values and valid verbose-option', function () {
     assert.deepEqual(truncateString(123, 2, { verbose: true }), {
       result: '',
       parts: [''],
