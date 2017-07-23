@@ -8,7 +8,7 @@ module.exports = function truncateString(string, length, options = {}) {
     verbose: options.verbose,
   };
 
-  // Helper
+  // Helper to get the return value depending on the vebose setting.
   const getResult = (str, prts) => {
     if (settings.verbose) {
       return {
@@ -20,7 +20,7 @@ module.exports = function truncateString(string, length, options = {}) {
     return str;
   };
 
-  // Handle the params
+  // Handle the params and return instantly if necessecary
   if (typeof string !== 'string') return getResult('');
   if (typeof length !== 'number' || length < 0) return getResult(string);
 
@@ -86,6 +86,7 @@ module.exports = function truncateString(string, length, options = {}) {
         rightCutOffset = rightIndex;
       }
     });
+
     // When all chars were checked in leftString and rightString, and we know where
     // the closest cut-position to the intended one is, we can decide if we
     // need to move the cut to the left or the right.
