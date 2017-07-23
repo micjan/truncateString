@@ -101,4 +101,37 @@ describe('truncateString', function () {
     assert.equal(truncateString('Lorem ipsum2dolor sit', 13, { cutChars: 2 }), 'Lorem ipsum2d…');
     assert.equal(truncateString('Lorem ipsum2dolor sit', 13, { cutChars: [' ', 2] }), 'Lorem ipsum2dolor…');
   });
+
+  // By setting verbose to true, the result will be an object with more information about the result.
+  it('should truncate String with valid verbose-option', function () {
+    assert.deepEqual(truncateString('Lorem ipsum-dolor sit', 6, { verbose: true }), {
+      result: 'Lorem…',
+      parts: ['Lorem ', 'ipsum-dolor sit'],
+      wasCut: true,
+    });
+    assert.deepEqual(truncateString('Lorem ipsum-dolor sit', 8, { verbose: true }), {
+      result: 'Lorem ip…',
+      parts: ['Lorem ip', 'sum-dolor sit'],
+      wasCut: true,
+    });
+    assert.deepEqual(truncateString('Lorem ipsum-dolor sit', 100, { verbose: true }), {
+      result: 'Lorem ipsum-dolor sit',
+      parts: ['Lorem ipsum-dolor sit'],
+      wasCut: false,
+    });
+  });
+
+  it('should truncate String with invalid values and valid verbose-option', function () {
+    assert.deepEqual(truncateString(123, 2, { verbose: true }), {
+      result: '',
+      parts: [''],
+      wasCut: false,
+    });
+    assert.deepEqual(truncateString('Lorem ipsum', '2', { verbose: true }), {
+      result: 'Lorem ipsum',
+      parts: ['Lorem ipsum'],
+      wasCut: false,
+    });
+    assert.equal(truncateString('Lorem ipsum', { verbose: true }), 'Lorem ipsum');
+  });
 });

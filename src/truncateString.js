@@ -1,15 +1,28 @@
 module.exports = function truncateString(string, length, options = {}) {
-  // Initially handle the params
-  if (typeof string !== 'string') return '';
-  if (typeof length !== 'number' || length < 0) return string;
-
   // Prepare base settings
   const settings = {
     appendix: '…',
     cutChars: [],
     threshold: length,
     trim: true,
+    verbose: options.verbose,
   };
+
+  // Helper
+  const getResult = (str, prts) => {
+    if (settings.verbose) {
+      return {
+        result: str,
+        parts: prts || [str],
+        wasCut: !!prts,
+      };
+    }
+    return str;
+  };
+
+  // Handle the params
+  if (typeof string !== 'string') return getResult('');
+  if (typeof length !== 'number' || length < 0) return getResult(string);
 
   // Validate options.threshold
   if (options.threshold && typeof options.threshold === 'number' && options.threshold > 0) {
@@ -17,7 +30,7 @@ module.exports = function truncateString(string, length, options = {}) {
   }
 
   // If string will never be cut we stop it here by returning the string as it was passed.
-  if (string.length <= settings.threshold || string.length <= length) return string;
+  if (string.length <= settings.threshold || string.length <= length) return getResult(string);
 
   // Validate options.appendix
   if (typeof options.appendix === 'string') {
@@ -95,14 +108,20 @@ module.exports = function truncateString(string, length, options = {}) {
   }
 
   // Check if the string will be cut at all. If that isn't the case, we can just return it.
-  if (string.length <= cutAt) return string;
+  if (string.length <= cutAt) return getResult(string);
 
   // Shorten the String
-  let shortenedString = string.substring(0, cutAt);
+  const parts = [
+    string.substring(0, cutAt),
+    string.substring(cutAt),
+  ];
 
   // Remove all spaces on the cut end if the settings say so
-  if (settings.trim) shortenedString = shortenedString.replace(/ +$/, '');
+  let result = settings.trim ? parts[0].replace(/ +$/, '') : parts[0];
 
-  // Add appendix and return the new string
-  return `${shortenedString}${settings.appendix}`;
+  // Add appendix
+  result = `${result}${settings.appendix}`;
+
+  // Return the result
+  return getResult(result, parts);
 };
