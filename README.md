@@ -10,10 +10,23 @@ $ npm install truncatestring --save
 
 ## How to use
 
+Importing it into your project:
+
+~~~
+// ES5 Minified
+var truncateString = require('truncatestring');
+
+// ES5 Non-Minified
+var truncateString = require('truncatestring/dist/truncateString');
+
+// ES2015
+var truncateString = require('truncatestring/src/truncateString');
+~~~
+
 Minimal usage:
 
 ~~~
-var truncateString = require('truncatestring');
+
 
 truncateString('Lorem Ipsum Dolor Est Sit Amet!', 8);
 // => "Lorem Ip…"
