@@ -197,20 +197,20 @@ truncateString('  Lorem   ipsum  ', 10, { trim: false });
 
 Type: `boolean`
 
-By default this is `false` and the return value of this function will always be a simple string.
+By default this is `false` and the return value of this function will always be a string.
 
 If this is `true` though, the return value will be an `object` with more information about the result.
 It will contain the following properties:
 
 | key           | type               | value         |
 |-------------- |--------------------| --------------|
-| result        | `string`           | The string that would have been returned if `options.verbose` would have been `false`. |
-| parts         | `array` of strings | If the `string` **was not** cut, this contains the `string`. If the `string` **was** cut into two parts, this will contain those parts of the string without an appendix. |
+| result        | `string`           | The string that would have been returned if `options.verbose` was `false`. |
+| parts         | `array` of strings | If the `string` **was not** cut, this contains the `string` as its only item. If the `string` **was** cut into two parts, this will contain those two parts of the string without an appendix. |
 | wasCut        | `boolean`          | If a cut was made, this is `true`, otherwise `false`. |
 
 ## <a name="dev-notes">Dev notes</a>
 
-Fork this repo and run
+Fork this repo and run:
 
 ~~~
 $npm install
@@ -222,7 +222,7 @@ Then work in `src/truncateString.js` and then run:
 $npm run build
 ~~~
 
-This will do some linting, transpile (to `dist/truncateString.js`), uglify (to `dist/truncateString.min.js`) and run tests (on the `dist/truncateString.min.js`).
+This will do some linting, transpile (to `dist/truncateString.js`), minify (to `dist/truncateString.min.js`) and run tests (on the `dist/truncateString.min.js`).
 
 Make sure that all Tests are successful and check the coverage/index.html for 100% test-coverage.
 
