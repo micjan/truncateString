@@ -14,6 +14,7 @@ A function to shorten strings with [options](#options).
         * [cutChars](#options-cutchars)
         * [threshold](#options-threshold)
         * [trim](#options-trim)
+        * [verbose](#options-verbose)
 * [Dev Notes](#dev-notes)
 * [License](#license)
 
@@ -52,7 +53,8 @@ truncateString('Lorem ipsum dolor est sit amet!', 8, {
   appendix: '…',
   cutChars: [],
   threshold: 8, // Default equals second parameter
-  trim: true
+  trim: true,
+  verbose: false
 });
 // => "Lorem ip…"
 ~~~
@@ -190,6 +192,21 @@ truncateString('  Lorem   ipsum  ', 10);
 truncateString('  Lorem   ipsum  ', 10, { trim: false });
 // => "  Lorem   …"
 ~~~
+
+#### <a name="options-verbose">options.verbose</a>
+
+Type: `boolean`
+
+By default this is `false` and the return value of this function will always be a simple string.
+
+If this is `true` though, the return value will be an `object` with more information about the result.  
+It will contain the following properties:
+
+| key           | type               | value         |
+|-------------- |--------------------| --------------|
+| result        | `string`           | The string that would have been returned if `options.verbose` would have been `false`. |
+| parts         | `array` of strings | If the `string` **was not** cut, this contains the `string`. If the `string` **was** cut into two parts, this will contain those parts of the string without an appendix. |
+| wasCut        | `boolean`          | If a cut was made, this is `true`, otherwise `false`. |
 
 ## <a name="dev-notes">Dev notes</a>
 
