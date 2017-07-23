@@ -26,7 +26,7 @@ $ npm install truncatestring --save
 
 ## <a name="how-to-use">How to use</a>
 
-Importing it into your project:
+Importing:
 
 ~~~
 // ES5 Minified
@@ -36,7 +36,7 @@ var truncateString = require('truncatestring');
 var truncateString = require('truncatestring/dist/truncateString');
 
 // ES2015
-var truncateString = require('truncatestring/src/truncateString');
+import truncateString from 'truncatestring/src/truncateString';
 ~~~
 
 Minimal usage:
@@ -77,7 +77,7 @@ Type: `number`
 
 The length to shorten the `string` to.
 If `string.length` is smaller or equal to `length` (or [options.threshold](#options-threshold)) it will be returned without any modification.
-If `string.length` is larger than `length` it will be cropped to have the length of `length` (can change slightly if [options.cutChars](#options-cutchars) is used).  
+If `string.length` is larger than `length` it will be cropped to have the length of `length` (can change slightly if [options.cutChars](#options-cutchars) is used).
 Before returning an ellipsis (`…`) will be appended to it (See [options.appendix](#options-appendix)).
 
 ### <a name="options">options</a>
@@ -107,7 +107,7 @@ truncateString('Lorem ipsum-dolor sit.', 15, { cutChars: ' ' });
 // => "Lorem ipsum-dolor…"
 ~~~
 
-So, what happend here?  
+So, what happend here?
 The intended cut in the first case would be `Lorem ip/sum-dolor sit.`. That cut is closer to the space between "Lorem" and "ipsum" than it is to the space between "dolor" and "sit", so the cut is moved to the left space.
 In the second example the intended cut `Lorem ipsum-dol/or sit.` is closer to the space on its right, so the cut is made there.
 
@@ -120,7 +120,7 @@ truncateString('Lorem ipsum-dolor sit.', 10, { cutChars: [' ', '-'] });
 
 The same rules apply here but with more chars that mark potential cut-positons.
 
-The intended cut `Lorem ipsu/m-dolor sit.` is moved to the closest char. In this case it is the dash to its right.  
+The intended cut `Lorem ipsu/m-dolor sit.` is moved to the closest char. In this case it is the dash to its right.
 Note, that the char that was marking the cut-position is **not** removed. The cut-position-char will stay attached to the returned string.
 
 The space in the first two examples **was** removed because [option.trim](#options-trim) is `true` by default.
@@ -199,7 +199,7 @@ Type: `boolean`
 
 By default this is `false` and the return value of this function will always be a simple string.
 
-If this is `true` though, the return value will be an `object` with more information about the result.  
+If this is `true` though, the return value will be an `object` with more information about the result.
 It will contain the following properties:
 
 | key           | type               | value         |
