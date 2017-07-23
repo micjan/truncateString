@@ -1,15 +1,28 @@
 module.exports = function truncateString(string, length, options = {}) {
-  // Initially handle the params
-  if (typeof string !== 'string') return '';
-  if (typeof length !== 'number' || length < 0) return string;
-
-  // Prepare base settings
+  // Prepare default settings
   const settings = {
     appendix: '…',
     cutChars: [],
     threshold: length,
     trim: true,
+    verbose: options.verbose,
   };
+
+  // Helper to get the return value depending on the vebose setting.
+  const getResult = (str, prts) => {
+    if (settings.verbose) {
+      return {
+        result: str,
+        parts: prts || [str],
+        wasCut: !!prts,
+      };
+    }
+    return str;
+  };
+
+  // Check the required params and return instantly if they are invalid
+  if (typeof string !== 'string') return getResult('');
+  if (typeof length !== 'number' || length < 0) return getResult(string);
 
   // Validate options.threshold
   if (options.threshold && typeof options.threshold === 'number' && options.threshold > 0) {
@@ -17,7 +30,7 @@ module.exports = function truncateString(string, length, options = {}) {
   }
 
   // If string will never be cut we stop it here by returning the string as it was passed.
-  if (string.length <= settings.threshold || string.length <= length) return string;
+  if (string.length <= settings.threshold || string.length <= length) return getResult(string);
 
   // Validate options.appendix
   if (typeof options.appendix === 'string') {
@@ -48,7 +61,7 @@ module.exports = function truncateString(string, length, options = {}) {
     // Split the string in left and right parts by cutting it at the intended
     // cup-position and cache the initial cut-position-offsets relative
     // to that intended cut-position.
-    // By doing that, we now know how much to the left or right we have to move
+    // By doing this, we now know how much to the left or right we have to move
     // to make a permitted cut.
     const leftString = string.substring(0, cutAt);
     let leftCutOffset = leftString.length;
@@ -61,8 +74,8 @@ module.exports = function truncateString(string, length, options = {}) {
     settings.cutChars.forEach((char) => {
       // First find the current char in each string-part that is closest to the
       // intended cut-position.
-      const leftIndex = leftString.lastIndexOf(char); // Rightmost Char
-      const rightIndex = rightString.indexOf(char); // Leftmost Char
+      const leftIndex = leftString.lastIndexOf(char); // Rightmost Char in leftString
+      const rightIndex = rightString.indexOf(char); // Leftmost Char in rightString
       // If the char was found in the leftString && the offset to the
       // intended cut-position is closer than the old one, update the leftCutOffset.
       if (leftIndex >= 0 && leftString.length - leftIndex < leftCutOffset) {
@@ -73,6 +86,7 @@ module.exports = function truncateString(string, length, options = {}) {
         rightCutOffset = rightIndex;
       }
     });
+
     // When all chars were checked in leftString and rightString, and we know where
     // the closest cut-position to the intended one is, we can decide if we
     // need to move the cut to the left or the right.
@@ -95,14 +109,20 @@ module.exports = function truncateString(string, length, options = {}) {
   }
 
   // Check if the string will be cut at all. If that isn't the case, we can just return it.
-  if (string.length <= cutAt) return string;
+  if (string.length <= cutAt) return getResult(string);
 
-  // Shorten the String
-  let shortenedString = string.substring(0, cutAt);
+  // Cut the string it its parts
+  const parts = [
+    string.substring(0, cutAt),
+    string.substring(cutAt),
+  ];
 
   // Remove all spaces on the cut end if the settings say so
-  if (settings.trim) shortenedString = shortenedString.replace(/ +$/, '');
+  let result = settings.trim ? parts[0].replace(/ +$/, '') : parts[0];
 
-  // Add appendix and return the new string
-  return `${shortenedString}${settings.appendix}`;
+  // Add appendix
+  result = `${result}${settings.appendix}`;
+
+  // Return the result
+  return getResult(result, parts);
 };
