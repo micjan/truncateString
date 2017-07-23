@@ -24,7 +24,9 @@ Usage with default options:
 ~~~
 truncateString('Lorem Ipsum Dolor Est Sit Amet!', 8, {
   appendix: '…',
-  threshold: 8 // Default equals second parameter
+  cutChars: [],
+  threshold: 8, // Default equals second parameter
+  trim: true
 });
 // => "Lorem Ip…"
 ~~~
