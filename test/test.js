@@ -100,6 +100,5 @@ describe('truncateString', function () {
     assert.equal(truncateString('Lorem Ipsum-Dolor Sit', 12, { cutChars: [' ', 'sum'] }), 'Lorem Ipsum-Dolor…');
     assert.equal(truncateString('Lorem Ipsum2Dolor Sit', 13, { cutChars: 2 }), 'Lorem Ipsum2D…');
     assert.equal(truncateString('Lorem Ipsum2Dolor Sit', 13, { cutChars: [' ', 2] }), 'Lorem Ipsum2Dolor…');
-
   });
 });
